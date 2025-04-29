@@ -44,4 +44,21 @@ export class HomePage extends BasePage {
   static get closeButton(){
     return cy.get("button[aria-label='Close Dialog']")
    }
+
+  static get cardsAmount(){
+    return cy.get(".mat-mdc-paginator-range-actions")
+  }
+  static get clickPaginator(){
+    return cy.get(".mat-mdc-paginator-touch-target")
+  }
+  static get changeCardAmount(){
+    return cy.get(".mdc-list-item__primary-text")
+  }
+  static get addToBasket() {
+    return cy.get("button[aria-label='Add to Basket']");
+  }
+  static get showBasket() {
+    return cy.get("[aria-label='Show the shopping cart']");
+  }
+
 }
