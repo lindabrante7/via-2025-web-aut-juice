@@ -9,7 +9,7 @@ static get selectAddressButton(){
 
 }
 static get clickContiuneButton() {
-    return cy.get("[aria-label='Proceed to payment selection']");
+  return cy.get("[aria-label='Proceed to payment selection']");
   }
 
 }

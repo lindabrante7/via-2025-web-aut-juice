@@ -47,6 +47,6 @@ Cypress.Commands.add("login", (username, password) => {
       validate() {
         cy.request("/whoami").its("status").should("eq", 200);
       },
-    }
-  );
+    }
+  );
 });

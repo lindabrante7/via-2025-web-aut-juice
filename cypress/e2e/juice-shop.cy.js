@@ -5,6 +5,12 @@ import { LoginPage } from "../pageObjects/LoginPage";
 import { RegistrationPage } from "../pageObjects/registrationPage";
 import { SelectAddressPage } from "../pageObjects/SelectAddressPage";
 import { DeliveryMethodPage } from "../pageObjects/DeliveryMethodPage";
+import { PaymentOptionsPage } from "../pageObjects/PaymentOptionPage";
+import { OrderSummaryPage } from "../pageObjects/OrderSummaryPage";
+import { OrderCompletionPage } from "../pageObjects/OrderCompletionPage";
+import { SavedAddressesPage } from "../pageObjects/SavedAddressesPage";
+import { CreateAddressPage } from "../pageObjects/CrateAddressPage";
+import { SavedPaymentMethodsPage } from "../pageObjects/SavedPaymentMethodPage";
 
 describe("Juice-shop scenarios", () => {
   context("Without auto login", () => {
@@ -187,7 +193,7 @@ describe("Juice-shop scenarios", () => {
   });
 
     // Create scenario - Buy Girlie T-shirt
-    it.only("Buy Girlie T-shirt", () => {
+    it("Buy Girlie T-shirt", () => {
 
     // Click on search icon
     HomePage.searchIcon.click();
@@ -207,39 +213,83 @@ describe("Juice-shop scenarios", () => {
     SelectAddressPage.clickContiuneButton.click();
     // Create page object - DeliveryMethodPage
     // Select delivery speed Standard Delivery
-    DeliveryMethodPage.clickStandardDelivery.click();
+    DeliveryMethodPage.standardButton.click();
     // Click Continue button
+    DeliveryMethodPage.ContinueButton.click();
     // Create page object - PaymentOptionsPage
     // Select card that ends with "5678"
+    PaymentOptionsPage.selectCards.click();
     // Click Continue button
+    PaymentOptionsPage.ContinueButton.click();
     // Create page object - OrderSummaryPage
     // Click on "Place your order and pay"
+    OrderSummaryPage.PlaceOrderPay.click();
     // Create page object - OrderCompletionPage
     // Validate confirmation - "Thank you for your purchase!"
+    OrderCompletionPage.Confirmation.should('contain.text', 'Thank you for your purchase!')
   });
 
+    it("Add adress", () => {
     // Create scenario - Add address
+
     // Click on Account
+    HomePage.Account.click();
     // Click on Orders & Payment
+    HomePage.OrderPay.click();
     // Click on My saved addresses
+    HomePage.SavedAddress.click();
     // Create page object - SavedAddressesPage
     // Click on Add New Address
+    SavedAddressesPage.addressesButton.click();
     // Create page object - CreateAddressPage
     // Fill in the necessary information
+    const Country=("Latvija");
+    CreateAddressPage.AddCountry.type(Country)
+    const Name=("Zane");
+    CreateAddressPage.AddName.type(Name)
+    const Mobile=("29323738");
+    CreateAddressPage.MobileNumber.type(Mobile)
+    const Zipcode=("2140");
+    CreateAddressPage.AddZipCode.type(Zipcode)
+    const Addres=("Auseklu");
+    CreateAddressPage.AddAddress.type(Addres)
+    const City=("Valmeira");
+    CreateAddressPage.AddCity.type(City)
+    const State=("1");
+    CreateAddressPage.AddState.type(State)
     // Click Submit button
+    CreateAddressPage.SubmitButton.click();
     // Validate that previously added address is visible
+    CreateAddressPage.AddressValidation.should("contain.text","2140")
+  });
 
+      it.only("Add payment option", () => {
     // Create scenario - Add payment option
     // Click on Account
+    HomePage.AccountButton.click();
     // Click on Orders & Payment
+    HomePage.OrderPay.click();
     // Click on My payment options
+    HomePage.PaymentOtions.click();
     // Create page object - SavedPaymentMethodsPage
     // Click Add new card
+    SavedPaymentMethodsPage.AddNewCard.click();
     // Fill in Name
+    const Namee=("Anna");
+    SavedPaymentMethodsPage.FillName.type(Namee)
     // Fill in Card Number
+    const CardsNum=("5466 3597 2315 1547");
+    SavedPaymentMethodsPage.FillCardNumber.type(CardsNum)
     // Set expiry month to 7
+    const ExpireCardMonth = '7';
+    cy.get('#mat-input-4').select(ExpireCardMonth); 
     // Set expiry year to 2090
+    const expireYear = "2090";
+    SavedPaymentMethodsPage.CardExpiryDate.select(expireYear)
     // Click Submit button
+    SavedPaymentMethodsPage.SubmitButton.click();
     // Validate that the card shows up in the list
+    SavedPaymentMethodsPage.CardList.should("contain.text", "Anna")
+      });
   });
 });
